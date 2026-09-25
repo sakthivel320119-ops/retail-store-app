@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Product Management</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f3f4f6;
+    color:#222;
+}
+
+.header{
+    background:#1f2937;
+    color:white;
+    text-align:center;
+    padding:24px;
+}
+
+.header h1{
+    margin:0 0 7px;
+}
+
+.header p{
+    margin:0;
+    color:#d1d5db;
+}
+
+.container{
+    max-width:1100px;
+    margin:25px auto;
+    padding:0 15px;
+}
+
+.back-button{
+    display:inline-block;
+    background:#374151;
+    color:white;
+    text-decoration:none;
+    padding:10px 16px;
+    border-radius:8px;
+    margin-bottom:20px;
+}
+
+.summary{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.summary-box{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    text-align:center;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.summary-box h3{
+    margin:0 0 8px;
+    font-size:14px;
+    color:#6b7280;
+}
+
+.summary-box strong{
+    font-size:25px;
+}
+
+.card{
+    background:white;
+    padding:22px;
+    border-radius:12px;
+    margin-bottom:25px;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.card h2{
+    margin-top:0;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.input-group{
+    position:relative;
+}
+
+.input-group label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:6px;
+}
+
+.input-group input,
+.input-group select,
+.filter-box select{
+    width:100%;
+    padding:12px;
+    border:1px solid #d1d5db;
+    border-radius:8px;
+    font-size:15px;
+}
+
+.add-button{
+    margin-top:18px;
+    padding:12px 22px;
+    border:none;
+    border-radius:8px;
+    background:#2563eb;
+    color:white;
+    font-size:15px;
+    cursor:pointer;
+}
+
+.add-button:hover{
+    background:#1d4ed8;
+}
+
+.tools{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr;
+    gap:12px;
+    margin-bottom:15px;
+}
+
+.result-count{
+    color:#6b7280;
+    margin-bottom:15px;
+}
+
+.product-item{
+    border:1px solid #e5e7eb;
+    background:#fafafa;
+    border-radius:10px;
+    padding:18px;
+    margin-bottom:12px;
+}
+
+.product-top{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.product-name{
+    font-size:20px;
+    font-weight:bold;
+}
+
+.details{
+    margin-top:10px;
+    line-height:1.8;
+    color:#4b5563;
+}
+
+.status{
+    display:inline-block;
+    padding:6px 10px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.available{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.low{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+.out{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.buttons{
+    margin-top:14px;
+}
+
+.buttons button{
+    border:none;
+    padding:9px 14px;
+    border-radius:7px;
+    cursor:pointer;
+    margin-right:7px;
+}
+
+.edit-button{
+    background:#f59e0b;
+    color:white;
+}
+
+.delete-button{
+    background:#dc2626;
+    color:white;
+}
+
+.no-products{
+    text-align:center;
+    padding:30px;
+    color:#6b7280;
+}
+
+
+/* SUGGESTIONS */
+
+.suggestion-box{
+    position:absolute;
+    left:0;
+    right:0;
+    top:100%;
+    background:white;
+    border:1px solid #d1d5db;
+    border-radius:0 0 8px 8px;
+    max-height:180px;
+    overflow-y:auto;
+    z-index:1000;
+    display:none;
+    box-shadow:0 4px 10px rgba(0,0,0,.15);
+}
+
+.suggestion-item{
+    padding:10px 12px;
+    cursor:pointer;
+    border-bottom:1px solid #eee;
+}
+
+.suggestion-item:hover{
+    background:#f3f4f6;
+}
+
+
+/* POPUP */
+
+.modal{
+    display:none;
+    position:fixed;
+    z-index:2000;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.55);
+    padding:20px;
+}
+
+.modal-content{
+    background:white;
+    max-width:500px;
+    margin:60px auto;
+    padding:25px;
+    border-radius:14px;
+    box-shadow:0 5px 20px rgba(0,0,0,.25);
+}
+
+.modal-content h2{
+    margin-top:0;
+}
+
+.modal-grid{
+    display:grid;
+    gap:13px;
+}
+
+.modal-grid label{
+    font-weight:bold;
+}
+
+.modal-grid input,
+.modal-grid select{
+    width:100%;
+    padding:11px;
+    margin-top:5px;
+    border:1px solid #d1d5db;
+    border-radius:8px;
+}
+
+.modal-buttons{
+    margin-top:20px;
+    display:flex;
+    gap:10px;
+}
+
+.save-button{
+    flex:1;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    background:#16a34a;
+    color:white;
+    cursor:pointer;
+}
+
+.cancel-button{
+    flex:1;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    background:#6b7280;
+    color:white;
+    cursor:pointer;
+}
+
+
+@media(max-width:700px){
+
+    .summary{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .tools{
+        grid-template-columns:1fr;
+    }
+
+    .product-top{
+        flex-direction:column;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<div class="header">
+
+<h1>📦 Product Management</h1>
+
+<p>Manage Products, Stock & Inventory</p>
+
+</div>
+
+
+<div class="container">
+
+
+<a href="index.html" class="back-button">
+⬅ Back to Home
+</a>
+
+
+<!-- SUMMARY -->
+
+<div class="summary">
+
+<div class="summary-box">
+<h3>Total Products</h3>
+<strong id="totalProducts">0</strong>
+</div>
+
+<div class="summary-box">
+<h3>Total Stock</h3>
+<strong id="totalStock">0</strong>
+</div>
+
+<div class="summary-box">
+<h3>Low Stock</h3>
+<strong id="lowStock">0</strong>
+</div>
+
+<div class="summary-box">
+<h3>Inventory Value</h3>
+<strong id="inventoryValue">₹0</strong>
+</div>
+
+</div>
+
+
+<!-- ADD PRODUCT -->
+
+<div class="card">
+
+<h2>➕ Add Product</h2>
+
+
+<div class="form-grid">
+
+
+<div class="input-group">
+
+<label>Product ID / SKU</label>
+
+<input
+type="text"
+id="productId"
+placeholder="Example: P001"
+autocomplete="off"
+oninput="showSuggestions('productId','productIdSuggestions')"
+onkeydown="enterNext(event,'productName')"
+>
+
+<div id="productIdSuggestions"
+class="suggestion-box"></div>
+
+</div>
+
+
+<div class="input-group">
+
+<label>Product Name</label>
+
+<input
+type="text"
+id="productName"
+placeholder="Example: Pen"
+autocomplete="off"
+oninput="showSuggestions('productName','productNameSuggestions')"
+onkeydown="enterNext(event,'category')"
+>
+
+<div id="productNameSuggestions"
+class="suggestion-box"></div>
+
+</div>
+
+
+<div class="input-group">
+
+<label>Category</label>
+
+<input
+type="text"
+id="category"
+placeholder="Example: Stationery"
+autocomplete="off"
+oninput="showSuggestions('category','categorySuggestions')"
+onkeydown="enterNext(event,'productPrice')"
+>
+
+<div id="categorySuggestions"
+class="suggestion-box"></div>
+
+</div>
+
+
+<div class="input-group">
+
+<label>Price</label>
+
+<input
+type="number"
+id="productPrice"
+placeholder="Example: 20"
+autocomplete="off"
+oninput="showSuggestions('productPrice','priceSuggestions')"
+onkeydown="enterNext(event,'productStock')"
+>
+
+<div id="priceSuggestions"
+class="suggestion-box"></div>
+
+</div>
+
+
+<div class="input-group">
+
+<label>Stock</label>
+
+<input
+type="number"
+id="productStock"
+placeholder="Example: 10"
+autocomplete="off"
+oninput="showSuggestions('productStock','stockSuggestions')"
+onkeydown="enterNext(event,'addButton')"
+>
+
+<div id="stockSuggestions"
+class="suggestion-box"></div>
+
+</div>
+
+
+</div>
+
+
+<button
+class="add-button"
+id="addButton"
+onclick="addProduct()"
+>
+➕ Add Product
+</button>
+
+
+</div>
+
+
+<!-- PRODUCT LIST -->
+
+<div class="card">
+
+<h2>📋 Product List</h2>
+
+
+<div class="tools">
+
+
+<div class="input-group">
+
+<input
+type="text"
+id="searchBox"
+placeholder="🔍 Search product / SKU / category..."
+autocomplete="off"
+oninput="showSuggestions('searchBox','searchSuggestions');showProducts();"
+>
+
+<div id="searchSuggestions"
+class="suggestion-box"></div>
+
+</div>
+
+
+<select id="sortBox">
+
+<option value="">Sort Products</option>
+
+<option value="name">
+Name A-Z
+</option>
+
+<option value="priceLow">
+Price Low → High
+</option>
+
+<option value="priceHigh">
+Price High → Low
+</option>
+
+<option value="stockLow">
+Stock Low → High
+</option>
+
+<option value="stockHigh">
+Stock High → Low
+</option>
+
+</select>
+
+
+<select id="filterBox">
+
+<option value="all">
+All Products
+</option>
+
+<option value="available">
+Available
+</option>
+
+<option value="low">
+Low Stock
+</option>
+
+<option value="out">
+Out of Stock
+</option>
+
+</select>
+
+
+</div>
+
+
+<div class="result-count"
+id="resultCount">
+0 products found
+</div>
+
+
+<div id="productList"></div>
+
+
+</div>
+
+</div>
+
+
+<!-- EDIT MODAL -->
+
+<div class="modal" id="editModal">
+
+<div class="modal-content">
+
+<h2>✏️ Edit Product</h2>
+
+
+<div class="modal-grid">
+
+
+<div>
+
+<label>Product ID / SKU</label>
+
+<input
+type="text"
+id="editId"
+>
+
+</div>
+
+
+<div>
+
+<label>Product Name</label>
+
+<input
+type="text"
+id="editName"
+>
+
+</div>
+
+
+<div>
+
+<label>Category</label>
+
+<input
+type="text"
+id="editCategory"
+>
+
+</div>
+
+
+<div>
+
+<label>Price</label>
+
+<input
+type="number"
+id="editPrice"
+>
+
+</div>
+
+
+<div>
+
+<label>Stock</label>
+
+<input
+type="number"
+id="editStock"
+>
+
+</div>
+
+
+</div>
+
+
+<div class="modal-buttons">
+
+<button
+class="save-button"
+onclick="saveEdit()"
+>
+💾 Save Changes
+</button>
+
+<button
+class="cancel-button"
+onclick="closeEdit()"
+>
+❌ Cancel
+</button>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<script>
+
+
+let editingProductName = null;
+
+
+/* GET PRODUCTS */
+
+function getProducts(){
+
+return JSON.parse(
+localStorage.getItem("products")
+) || [];
+
+}
+
+
+/* SAVE PRODUCTS */
+
+function saveProducts(products){
+
+localStorage.setItem(
+"products",
+JSON.stringify(products)
+);
+
+}
+
+
+/* ADD PRODUCT */
+
+function addProduct(){
+
+let id =
+document.getElementById("productId").value.trim();
+
+let name =
+document.getElementById("productName").value.trim();
+
+let category =
+document.getElementById("category").value.trim();
+
+let price =
+Number(document.getElementById("productPrice").value);
+
+let stock =
+Number(document.getElementById("productStock").value);
+
+
+if(id===""){
+alert("❌ Please enter Product ID / SKU.");
+return;
+}
+
+if(name===""){
+alert("❌ Please enter Product Name.");
+return;
+}
+
+if(category===""){
+alert("❌ Please enter Category.");
+return;
+}
+
+if(price<=0){
+alert("❌ Please enter a valid price.");
+return;
+}
+
+if(stock<0 || !Number.isInteger(stock)){
+alert("❌ Please enter a valid stock quantity.");
+return;
+}
+
+
+let products=getProducts();
+
+
+let duplicateId=products.some(function(product){
+
+return product.id &&
+product.id.toLowerCase()===id.toLowerCase();
+
+});
+
+
+if(duplicateId){
+
+alert("❌ Product ID / SKU already exists.");
+
+return;
+
+}
+
+
+let duplicateName=products.some(function(product){
+
+return product.name.toLowerCase()===name.toLowerCase();
+
+});
+
+
+if(duplicateName){
+
+alert("❌ Product already exists.");
+
+return;
+
+}
+
+
+products.push({
+
+id:id,
+name:name,
+category:category,
+price:price,
+stock:stock
+
+});
+
+
+saveProducts(products);
+
+
+alert(
+"✅ Product Added Successfully\n\n"+name
+);
+
+
+document.getElementById("productId").value="";
+document.getElementById("productName").value="";
+document.getElementById("category").value="";
+document.getElementById("productPrice").value="";
+document.getElementById("productStock").value="";
+
+
+hideSuggestions();
+
+showProducts();
+
+}
+
+
+/* SHOW PRODUCTS */
+
+function showProducts(){
+
+let products=getProducts();
+
+let search=
+document.getElementById("searchBox")
+.value
+.trim()
+.toLowerCase();
+
+let sort=
+document.getElementById("sortBox").value;
+
+let filter=
+document.getElementById("filterBox").value;
+
+
+products.sort(function(a,b){
+
+if(sort==="name")
+return a.name.localeCompare(b.name);
+
+if(sort==="priceLow")
+return Number(a.price)-Number(b.price);
+
+if(sort==="priceHigh")
+return Number(b.price)-Number(a.price);
+
+if(sort==="stockLow")
+return Number(a.stock)-Number(b.stock);
+
+if(sort==="stockHigh")
+return Number(b.stock)-Number(a.stock);
+
+return 0;
+
+});
+
+
+let list="";
+
+let visible=0;
+
+
+products.forEach(function(product,index){
+
+
+let category=
+product.category || "General";
+
+let id=
+product.id || "-";
+
+let stock=
+Number(product.stock);
+
+
+if(search!=="" &&
+
+!product.name.toLowerCase().includes(search) &&
+
+!category.toLowerCase().includes(search) &&
+
+!id.toLowerCase().includes(search)){
+
+return;
+
+}
+
+
+if(filter==="available" && stock<=5)
+return;
+
+if(filter==="low" && (stock===0 || stock>5))
+return;
+
+if(filter==="out" && stock!==0)
+return;
+
+
+visible++;
+
+
+let statusClass="available";
+
+let statusText="✅ Available";
+
+
+if(stock===0){
+
+statusClass="out";
+
+statusText="⛔ Out of Stock";
+
+}
+else if(stock<=5){
+
+statusClass="low";
+
+statusText="⚠️ Low Stock";
+
+}
+
+
+let inventory=
+Number(product.price)*stock;
+
+
+list+=`
+
+<div class="product-item">
+
+<div class="product-top">
+
+<div>
+
+<div class="product-name">
+
+📦 ${escapeHTML(product.name)}
+
+</div>
+
+
+<div class="details">
+
+🆔 SKU: ${escapeHTML(id)}
+
+<br>
+
+🏷️ Category:
+${escapeHTML(category)}
+
+<br>
+
+💰 Price:
+₹${Number(product.price).toFixed(2)}
+
+<br>
+
+📦 Stock:
+${stock}
+
+<br>
+
+💵 Inventory Value:
+₹${inventory.toFixed(2)}
+
+</div>
+
+</div>
+
+
+<div>
+
+<span class="status ${statusClass}">
+
+${statusText}
+
+</span>
+
+</div>
+
+
+</div>
+
+
+<div class="buttons">
+
+<button
+class="edit-button"
+onclick="openEdit('${escapeJS(product.name)}')"
+>
+✏️ Edit
+</button>
+
+
+<button
+class="delete-button"
+onclick="deleteProduct('${escapeJS(product.name)}')"
+>
+🗑️ Delete
+</button>
+
+</div>
+
+
+</div>
+
+`;
+
+});
+
+
+if(list===""){
+
+list=`
+
+<div class="no-products">
+
+🔍 No products found.
+
+</div>
+
+`;
+
+}
+
+
+document.getElementById("productList")
+.innerHTML=list;
+
+
+document.getElementById("resultCount")
+.innerText=
+visible+" product(s) found";
+
+
+updateSummary();
+
+}
+
+
+/* SUMMARY */
+
+function updateSummary(){
+
+let products=getProducts();
+
+let totalStock=0;
+
+let lowStock=0;
+
+let inventoryValue=0;
+
+
+products.forEach(function(product){
+
+let stock=
+Number(product.stock);
+
+let price=
+Number(product.price);
+
+
+totalStock+=stock;
+
+inventoryValue+=price*stock;
+
+
+if(stock<=5){
+
+lowStock++;
+
+}
+
+});
+
+
+document.getElementById("totalProducts")
+.innerText=products.length;
+
+document.getElementById("totalStock")
+.innerText=totalStock;
+
+document.getElementById("lowStock")
+.innerText=lowStock;
+
+document.getElementById("inventoryValue")
+.innerText=
+"₹"+inventoryValue.toFixed(2);
+
+}
+
+
+/* OPEN EDIT */
+
+function openEdit(productName){
+
+let products=getProducts();
+
+
+let index=products.findIndex(function(product){
+
+return product.name.toLowerCase()===
+productName.toLowerCase();
+
+});
+
+
+if(index===-1){
+
+alert("❌ Product not found.");
+
+return;
+
+}
+
+
+let product=products[index];
+
+
+editingProductName=product.name;
+
+
+document.getElementById("editId").value=
+product.id || "";
+
+document.getElementById("editName").value=
+product.name;
+
+document.getElementById("editCategory").value=
+product.category || "General";
+
+document.getElementById("editPrice").value=
+product.price;
+
+document.getElementById("editStock").value=
+product.stock;
+
+
+document.getElementById("editModal")
+.style.display="block";
+
+}
+
+
+/* SAVE EDIT */
+
+function saveEdit(){
+
+let products=getProducts();
+
+
+let index=products.findIndex(function(product){
+
+return product.name.toLowerCase()===
+editingProductName.toLowerCase();
+
+});
+
+
+if(index===-1){
+
+alert("❌ Product not found.");
+
+return;
+
+}
+
+
+let id=
+document.getElementById("editId")
+.value.trim();
+
+let name=
+document.getElementById("editName")
+.value.trim();
+
+let category=
+document.getElementById("editCategory")
+.value.trim();
+
+let price=
+Number(document.getElementById("editPrice").value);
+
+let stock=
+Number(document.getElementById("editStock").value);
+
+
+if(id===""){
+
+alert("❌ Product ID cannot be empty.");
+
+return;
+
+}
+
+if(name===""){
+
+alert("❌ Product Name cannot be empty.");
+
+return;
+
+}
+
+if(category===""){
+
+alert("❌ Category cannot be empty.");
+
+return;
+
+}
+
+if(price<=0){
+
+alert("❌ Invalid price.");
+
+return;
+
+}
+
+if(stock<0 || !Number.isInteger(stock)){
+
+alert("❌ Invalid stock.");
+
+return;
+
+}
+
+
+/* DUPLICATE ID CHECK */
+
+let duplicateId=products.some(function(product,i){
+
+return i!==index &&
+product.id &&
+product.id.toLowerCase()===
+id.toLowerCase();
+
+});
+
+
+if(duplicateId){
+
+alert("❌ Product ID already exists.");
+
+return;
+
+}
+
+
+/* DUPLICATE NAME CHECK */
+
+let duplicateName=products.some(function(product,i){
+
+return i!==index &&
+product.name.toLowerCase()===
+name.toLowerCase();
+
+});
+
+
+if(duplicateName){
+
+alert("❌ Product name already exists.");
+
+return;
+
+}
+
+
+products[index].id=id;
+
+products[index].name=name;
+
+products[index].category=category;
+
+products[index].price=price;
+
+products[index].stock=stock;
+
+
+saveProducts(products);
+
+
+closeEdit();
+
+
+alert("✅ Product Updated Successfully");
+
+showProducts();
+
+}
+
+
+/* CLOSE EDIT */
+
+function closeEdit(){
+
+document.getElementById("editModal")
+.style.display="none";
+
+editingProductName=null;
+
+}
+
+
+/* DELETE */
+
+function deleteProduct(productName){
+
+let products=getProducts();
+
+
+let index=products.findIndex(function(product){
+
+return product.name.toLowerCase()===
+productName.toLowerCase();
+
+});
+
+
+if(index===-1){
+
+alert("❌ Product not found.");
+
+return;
+
+}
+
+
+let product=products[index];
+
+
+let confirmDelete=confirm(
+
+"🗑️ Delete Product?\n\n"+
+"Product: "+product.name+
+"\nStock: "+product.stock
+
+);
+
+
+if(!confirmDelete)
+return;
+
+
+products.splice(index,1);
+
+saveProducts(products);
+
+
+alert("✅ Product Deleted Successfully");
+
+
+showProducts();
+
+}
+
+
+/* SUGGESTIONS */
+
+function showSuggestions(inputId,boxId){
+
+let input=
+document.getElementById(inputId);
+
+let box=
+document.getElementById(boxId);
+
+let value=
+input.value.trim().toLowerCase();
+
+let products=getProducts();
+
+let suggestions=[];
+
+
+products.forEach(function(product){
+
+if(inputId==="productId" && product.id)
+suggestions.push(product.id);
+
+if(inputId==="productName")
+suggestions.push(product.name);
+
+if(inputId==="category" && product.category)
+suggestions.push(product.category);
+
+if(inputId==="productPrice")
+suggestions.push(product.price);
+
+if(inputId==="productStock")
+suggestions.push(product.stock);
+
+if(inputId==="searchBox"){
+
+suggestions.push(product.name);
+
+if(product.id)
+suggestions.push(product.id);
+
+if(product.category)
+suggestions.push(product.category);
+
+}
+
+});
+
+
+suggestions=[
+...new Set(suggestions)
+];
+
+
+if(value!==""){
+
+suggestions=
+suggestions.filter(function(item){
+
+return String(item)
+.toLowerCase()
+.includes(value);
+
+});
+
+}
+
+
+if(suggestions.length===0){
+
+box.style.display="none";
+
+return;
+
+}
+
+
+let html="";
+
+
+suggestions.slice(0,10)
+.forEach(function(item){
+
+html+=`
+
+<div
+class="suggestion-item"
+onclick="selectSuggestion('${escapeJS(String(item))}','${boxId}','${inputId}')"
+>
+
+${escapeHTML(String(item))}
+
+</div>
+
+`;
+
+});
+
+
+box.innerHTML=html;
+
+box.style.display="block";
+
+}
+
+
+/* SELECT SUGGESTION */
+
+function selectSuggestion(value,boxId,inputId){
+
+document.getElementById(inputId)
+.value=value;
+
+
+document.getElementById(boxId)
+.style.display="none";
+
+
+if(inputId==="searchBox"){
+
+showProducts();
+
+}
+
+}
+
+
+/* ENTER KEY */
+
+function enterNext(event,nextId){
+
+if(event.key!=="Enter")
+return;
+
+
+event.preventDefault();
+
+hideSuggestions();
+
+
+if(nextId==="addButton"){
+
+addProduct();
+
+}
+else{
+
+document.getElementById(nextId)
+.focus();
+
+}
+
+}
+
+
+/* HIDE SUGGESTIONS */
+
+function hideSuggestions(){
+
+document.querySelectorAll(".suggestion-box")
+.forEach(function(box){
+
+box.style.display="none";
+
+});
+
+}
+
+
+/* CLICK OUTSIDE */
+
+document.addEventListener("click",function(event){
+
+if(!event.target.closest(".input-group")){
+
+hideSuggestions();
+
+}
+
+});
+
+
+/* SORT */
+
+document.getElementById("sortBox")
+.addEventListener("change",showProducts);
+
+
+/* FILTER */
+
+document.getElementById("filterBox")
+.addEventListener("change",showProducts);
+
+
+/* ESCAPE HTML */
+
+function escapeHTML(value){
+
+return String(value)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+
+/* ESCAPE JS */
+
+function escapeJS(value){
+
+return String(value)
+.replace(/\\/g,"\\\\")
+.replace(/'/g,"\\'")
+.replace(/"/g,'\\"')
+.replace(/\n/g,"\\n")
+.replace(/\r/g,"\\r");
+
+}
+
+
+/* CLOSE MODAL WHEN CLICK OUTSIDE */
+
+window.onclick=function(event){
+
+let modal=
+document.getElementById("editModal");
+
+if(event.target===modal){
+
+closeEdit();
+
+}
+
+};
+
+
+/* START */
+
+showProducts();
+
+</script>
+
+</body>
+</html>

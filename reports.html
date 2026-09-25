@@ -1,0 +1,1694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Reports & Analytics</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f3f4f6;
+    color:#222;
+}
+
+.header{
+    background:#1f2937;
+    color:white;
+    text-align:center;
+    padding:25px 15px;
+}
+
+.header h1{
+    margin:0 0 7px;
+}
+
+.header p{
+    margin:0;
+    color:#d1d5db;
+}
+
+.container{
+    max-width:1200px;
+    margin:25px auto;
+    padding:0 15px;
+}
+
+.back-button{
+    display:inline-block;
+    background:#374151;
+    color:white;
+    text-decoration:none;
+    padding:10px 16px;
+    border-radius:8px;
+    margin-bottom:20px;
+}
+
+.card{
+    background:white;
+    padding:22px;
+    border-radius:14px;
+    margin-bottom:22px;
+    box-shadow:0 2px 9px rgba(0,0,0,.08);
+}
+
+.card h2{
+    margin-top:0;
+}
+
+
+/* KPI */
+
+.kpi-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.kpi{
+    background:white;
+    border-radius:12px;
+    padding:20px;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+    text-align:center;
+}
+
+.kpi-title{
+    color:#6b7280;
+    font-size:14px;
+    margin-bottom:9px;
+}
+
+.kpi-value{
+    font-size:25px;
+    font-weight:bold;
+}
+
+
+/* SECONDARY KPI */
+
+.secondary-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.secondary-box{
+    background:#f9fafb;
+    border:1px solid #e5e7eb;
+    padding:17px;
+    border-radius:10px;
+    text-align:center;
+}
+
+.secondary-box h3{
+    margin:0 0 8px;
+    font-size:14px;
+    color:#6b7280;
+}
+
+.secondary-box strong{
+    font-size:22px;
+}
+
+
+/* TOP PRODUCTS */
+
+.highlight-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+.highlight{
+    padding:20px;
+    border-radius:12px;
+    background:#f9fafb;
+    border:1px solid #e5e7eb;
+}
+
+.highlight-title{
+    color:#6b7280;
+    font-size:14px;
+}
+
+.highlight-value{
+    font-size:22px;
+    font-weight:bold;
+    margin-top:8px;
+}
+
+
+/* CHART */
+
+.chart-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:14px;
+}
+
+.chart-label{
+    width:150px;
+    font-weight:bold;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}
+
+.chart-area{
+    flex:1;
+    height:28px;
+    background:#e5e7eb;
+    border-radius:6px;
+    overflow:hidden;
+}
+
+.chart-bar{
+    height:100%;
+    background:#2563eb;
+    border-radius:6px;
+    min-width:2px;
+}
+
+.chart-value{
+    width:90px;
+    text-align:right;
+    font-weight:bold;
+}
+
+
+/* CATEGORY */
+
+.category-item{
+    display:flex;
+    justify-content:space-between;
+    padding:13px 0;
+    border-bottom:1px solid #eee;
+}
+
+.category-item:last-child{
+    border-bottom:none;
+}
+
+
+/* STOCK */
+
+.stock-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.stock-box{
+    padding:20px;
+    border-radius:12px;
+    text-align:center;
+    border:1px solid #e5e7eb;
+}
+
+.stock-box strong{
+    display:block;
+    font-size:28px;
+    margin-top:8px;
+}
+
+.low{
+    background:#fff7ed;
+}
+
+.out{
+    background:#fef2f2;
+}
+
+.good{
+    background:#f0fdf4;
+}
+
+
+/* TABLE */
+
+.table-wrapper{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:750px;
+}
+
+th,
+td{
+    padding:12px;
+    border-bottom:1px solid #e5e7eb;
+    text-align:left;
+}
+
+th{
+    background:#f9fafb;
+}
+
+tr:hover{
+    background:#fafafa;
+}
+
+
+/* SEARCH */
+
+.tools{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:12px;
+    margin-bottom:15px;
+}
+
+.tools input,
+.tools select{
+    width:100%;
+    padding:12px;
+    border:1px solid #d1d5db;
+    border-radius:8px;
+    font-size:15px;
+}
+
+
+/* BUTTONS */
+
+.action-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:22px;
+}
+
+.action-row button{
+    border:none;
+    padding:11px 17px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:14px;
+}
+
+.refresh{
+    background:#2563eb;
+    color:white;
+}
+
+.export{
+    background:#16a34a;
+    color:white;
+}
+
+.print{
+    background:#374151;
+    color:white;
+}
+
+
+/* EMPTY */
+
+.empty{
+    text-align:center;
+    padding:30px;
+    color:#6b7280;
+}
+
+
+/* LAST UPDATE */
+
+.last-update{
+    text-align:center;
+    color:#6b7280;
+    font-size:13px;
+    margin-top:10px;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+    .kpi-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .secondary-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .stock-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .kpi-grid,
+    .secondary-grid,
+    .highlight-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .tools{
+        grid-template-columns:1fr;
+    }
+
+    .chart-label{
+        width:100px;
+    }
+
+}
+
+@media(max-width:450px){
+
+    .kpi-grid,
+    .secondary-grid,
+    .highlight-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+
+/* PRINT */
+
+@media print{
+
+    .back-button,
+    .action-row,
+    .tools{
+        display:none !important;
+    }
+
+    body{
+        background:white;
+    }
+
+    .card,
+    .kpi{
+        box-shadow:none;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="header">
+
+<h1>📈 Reports & Analytics</h1>
+
+<p>Retail Store Business Intelligence Dashboard</p>
+
+</div>
+
+
+<div class="container">
+
+
+<a href="index.html" class="back-button">
+⬅ Back to Home
+</a>
+
+
+<!-- ACTIONS -->
+
+<div class="action-row">
+
+<button
+class="refresh"
+onclick="loadReport()"
+>
+🔄 Refresh Report
+</button>
+
+<button
+class="export"
+onclick="exportCSV()"
+>
+📥 Export CSV
+</button>
+
+<button
+class="print"
+onclick="window.print()"
+>
+🖨️ Print Report
+</button>
+
+</div>
+
+
+<!-- MAIN KPI -->
+
+<div class="kpi-grid">
+
+
+<div class="kpi">
+
+<div class="kpi-title">
+💰 Total Revenue
+</div>
+
+<div
+class="kpi-value"
+id="totalRevenue"
+>
+₹0
+</div>
+
+</div>
+
+
+<div class="kpi">
+
+<div class="kpi-title">
+🧾 Transactions
+</div>
+
+<div
+class="kpi-value"
+id="totalTransactions"
+>
+0
+</div>
+
+</div>
+
+
+<div class="kpi">
+
+<div class="kpi-title">
+📦 Products Sold
+</div>
+
+<div
+class="kpi-value"
+id="productsSold"
+>
+0
+</div>
+
+</div>
+
+
+<div class="kpi">
+
+<div class="kpi-title">
+🏪 Total Products
+</div>
+
+<div
+class="kpi-value"
+id="totalProducts"
+>
+0
+</div>
+
+</div>
+
+
+</div>
+
+
+<br>
+
+
+<!-- SECONDARY -->
+
+<div class="secondary-grid">
+
+
+<div class="secondary-box">
+
+<h3>📦 Total Stock</h3>
+
+<strong id="totalStock">
+0
+</strong>
+
+</div>
+
+
+<div class="secondary-box">
+
+<h3>💵 Inventory Value</h3>
+
+<strong id="inventoryValue">
+₹0
+</strong>
+
+</div>
+
+
+<div class="secondary-box">
+
+<h3>🧾 Average Order Value</h3>
+
+<strong id="averageOrder">
+₹0
+</strong>
+
+</div>
+
+
+<div class="secondary-box">
+
+<h3>📦 Avg Units / Sale</h3>
+
+<strong id="averageUnits">
+0
+</strong>
+
+</div>
+
+
+</div>
+
+
+<br>
+
+
+<!-- TOP PRODUCTS -->
+
+<div class="card">
+
+<h2>🏆 Business Highlights</h2>
+
+
+<div class="highlight-grid">
+
+
+<div class="highlight">
+
+<div class="highlight-title">
+🏆 Top Selling Product
+</div>
+
+<div
+class="highlight-value"
+id="topProduct"
+>
+No sales yet
+</div>
+
+<div id="topProductQty">
+0 units sold
+</div>
+
+</div>
+
+
+<div class="highlight">
+
+<div class="highlight-title">
+💰 Highest Revenue Product
+</div>
+
+<div
+class="highlight-value"
+id="highestRevenueProduct"
+>
+No sales yet
+</div>
+
+<div id="highestRevenueAmount">
+₹0 revenue
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<!-- SALES CHART -->
+
+<div class="card">
+
+<h2>📊 Product Sales Analytics</h2>
+
+<div id="salesChart"></div>
+
+</div>
+
+
+<!-- CATEGORY ANALYTICS -->
+
+<div class="card">
+
+<h2>🏷️ Category Analytics</h2>
+
+<div id="categoryList"></div>
+
+</div>
+
+
+<!-- STOCK HEALTH -->
+
+<div class="card">
+
+<h2>📦 Inventory Health</h2>
+
+
+<div class="stock-grid">
+
+
+<div class="stock-box good">
+
+Available Products
+
+<strong id="availableProducts">
+0
+</strong>
+
+</div>
+
+
+<div class="stock-box low">
+
+⚠️ Low Stock
+
+<strong id="lowStock">
+0
+</strong>
+
+</div>
+
+
+<div class="stock-box out">
+
+⛔ Out of Stock
+
+<strong id="outOfStock">
+0
+</strong>
+
+</div>
+
+
+</div>
+
+
+<br>
+
+
+<div>
+
+<b>Stock Health:</b>
+
+<span id="stockHealth">
+0%
+</span>
+
+</div>
+
+</div>
+
+
+<!-- SALES TABLE -->
+
+<div class="card">
+
+<h2>🧾 Sales Transactions</h2>
+
+
+<div class="tools">
+
+
+<input
+type="text"
+id="salesSearch"
+placeholder="🔍 Search sales by product..."
+oninput="showSalesTable()"
+>
+
+
+<select
+id="salesSort"
+onchange="showSalesTable()"
+>
+
+<option value="latest">
+Latest First
+</option>
+
+<option value="high">
+Highest Amount
+</option>
+
+<option value="low">
+Lowest Amount
+</option>
+
+<option value="quantity">
+Highest Quantity
+</option>
+
+</select>
+
+
+</div>
+
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>#</th>
+
+<th>Product</th>
+
+<th>Price</th>
+
+<th>Quantity</th>
+
+<th>Total</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="salesTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<!-- PRODUCT INVENTORY -->
+
+<div class="card">
+
+<h2>📦 Product Inventory Report</h2>
+
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Product</th>
+
+<th>SKU</th>
+
+<th>Category</th>
+
+<th>Price</th>
+
+<th>Stock</th>
+
+<th>Inventory Value</th>
+
+<th>Status</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="inventoryTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<div class="last-update"
+id="lastUpdate"
+>
+Last updated: -
+</div>
+
+
+</div>
+
+
+<script>
+
+
+/* DATA */
+
+function getProducts(){
+
+return JSON.parse(
+localStorage.getItem("products")
+) || [];
+
+}
+
+
+function getSales(){
+
+return JSON.parse(
+localStorage.getItem("sales")
+) || [];
+
+}
+
+
+/* LOAD REPORT */
+
+function loadReport(){
+
+let products=getProducts();
+
+let sales=getSales();
+
+
+/* BASIC KPI */
+
+let revenue=0;
+
+let quantity=0;
+
+
+sales.forEach(function(sale){
+
+revenue+=Number(sale.total);
+
+quantity+=Number(sale.quantity);
+
+});
+
+
+document.getElementById("totalRevenue")
+.innerText=
+"₹"+revenue.toFixed(2);
+
+
+document.getElementById("totalTransactions")
+.innerText=
+sales.length;
+
+
+document.getElementById("productsSold")
+.innerText=
+quantity;
+
+
+document.getElementById("totalProducts")
+.innerText=
+products.length;
+
+
+/* INVENTORY */
+
+let totalStock=0;
+
+let inventoryValue=0;
+
+let lowStock=0;
+
+let outOfStock=0;
+
+let available=0;
+
+
+products.forEach(function(product){
+
+let stock=
+Number(product.stock);
+
+let price=
+Number(product.price);
+
+
+totalStock+=stock;
+
+inventoryValue+=
+price*stock;
+
+
+if(stock===0){
+
+outOfStock++;
+
+}
+else if(stock<=5){
+
+lowStock++;
+
+}
+else{
+
+available++;
+
+}
+
+});
+
+
+document.getElementById("totalStock")
+.innerText=
+totalStock;
+
+
+document.getElementById("inventoryValue")
+.innerText=
+"₹"+inventoryValue.toFixed(2);
+
+
+document.getElementById("lowStock")
+.innerText=
+lowStock;
+
+
+document.getElementById("outOfStock")
+.innerText=
+outOfStock;
+
+
+document.getElementById("availableProducts")
+.innerText=
+available;
+
+
+/* AVERAGES */
+
+let averageOrder=
+sales.length>0
+? revenue/sales.length
+:0;
+
+
+let averageUnits=
+sales.length>0
+? quantity/sales.length
+:0;
+
+
+document.getElementById("averageOrder")
+.innerText=
+"₹"+averageOrder.toFixed(2);
+
+
+document.getElementById("averageUnits")
+.innerText=
+averageUnits.toFixed(2);
+
+
+/* TOP PRODUCT */
+
+let productSales={};
+
+let productRevenue={};
+
+
+sales.forEach(function(sale){
+
+let name=sale.name;
+
+let qty=
+Number(sale.quantity);
+
+let total=
+Number(sale.total);
+
+
+if(!productSales[name])
+productSales[name]=0;
+
+if(!productRevenue[name])
+productRevenue[name]=0;
+
+
+productSales[name]+=qty;
+
+productRevenue[name]+=total;
+
+});
+
+
+let topProduct="No sales yet";
+
+let topQty=0;
+
+
+Object.keys(productSales)
+.forEach(function(name){
+
+if(productSales[name]>topQty){
+
+topQty=
+productSales[name];
+
+topProduct=name;
+
+}
+
+});
+
+
+document.getElementById("topProduct")
+.innerText=
+topProduct;
+
+
+document.getElementById("topProductQty")
+.innerText=
+topQty+" units sold";
+
+
+/* HIGHEST REVENUE */
+
+let highestProduct="No sales yet";
+
+let highestRevenue=0;
+
+
+Object.keys(productRevenue)
+.forEach(function(name){
+
+if(productRevenue[name]>highestRevenue){
+
+highestRevenue=
+productRevenue[name];
+
+highestProduct=name;
+
+}
+
+});
+
+
+document.getElementById("highestRevenueProduct")
+.innerText=
+highestProduct;
+
+
+document.getElementById("highestRevenueAmount")
+.innerText=
+"₹"+highestRevenue.toFixed(2)+" revenue";
+
+
+/* STOCK HEALTH */
+
+let stockHealth=0;
+
+
+if(products.length>0){
+
+stockHealth=
+(available/products.length)*100;
+
+}
+
+
+document.getElementById("stockHealth")
+.innerText=
+stockHealth.toFixed(1)+"%";
+
+
+/* CHARTS */
+
+showSalesChart(productSales);
+
+showCategoryAnalytics(products);
+
+showSalesTable();
+
+showInventoryTable();
+
+
+/* TIME */
+
+let now=new Date();
+
+document.getElementById("lastUpdate")
+.innerText=
+"Last updated: "+now.toLocaleString();
+
+}
+
+
+/* SALES CHART */
+
+function showSalesChart(productSales){
+
+let container=
+document.getElementById("salesChart");
+
+
+let names=
+Object.keys(productSales);
+
+
+if(names.length===0){
+
+container.innerHTML=
+'<div class="empty">📊 No sales data available yet.</div>';
+
+return;
+
+}
+
+
+let max=0;
+
+
+names.forEach(function(name){
+
+if(productSales[name]>max)
+max=productSales[name];
+
+});
+
+
+names.sort(function(a,b){
+
+return productSales[b]-productSales[a];
+
+});
+
+
+let html="";
+
+
+names.slice(0,10)
+.forEach(function(name){
+
+let percentage=
+(productSales[name]/max)*100;
+
+
+html+=`
+
+<div class="chart-row">
+
+<div class="chart-label">
+${escapeHTML(name)}
+</div>
+
+<div class="chart-area">
+
+<div
+class="chart-bar"
+style="width:${percentage}%"
+>
+</div>
+
+</div>
+
+<div class="chart-value">
+
+${productSales[name]}
+
+</div>
+
+</div>
+
+`;
+
+});
+
+
+container.innerHTML=html;
+
+}
+
+
+/* CATEGORY */
+
+function showCategoryAnalytics(products){
+
+let categoryData={};
+
+
+products.forEach(function(product){
+
+let category=
+product.category || "General";
+
+
+let stock=
+Number(product.stock);
+
+
+if(!categoryData[category]){
+
+categoryData[category]={
+products:0,
+stock:0,
+value:0
+};
+
+}
+
+
+categoryData[category].products++;
+
+categoryData[category].stock+=stock;
+
+categoryData[category].value+=
+Number(product.price)*stock;
+
+});
+
+
+let categories=
+Object.keys(categoryData);
+
+
+let container=
+document.getElementById("categoryList");
+
+
+if(categories.length===0){
+
+container.innerHTML=
+'<div class="empty">No category data available.</div>';
+
+return;
+
+}
+
+
+let html="";
+
+
+categories.forEach(function(category){
+
+let data=
+categoryData[category];
+
+
+html+=`
+
+<div class="category-item">
+
+<div>
+
+<b>🏷️ ${escapeHTML(category)}</b>
+
+<br>
+
+<small>
+${data.products} product(s)
+</small>
+
+</div>
+
+<div>
+
+Stock: ${data.stock}
+
+<br>
+
+Value: ₹${data.value.toFixed(2)}
+
+</div>
+
+</div>
+
+`;
+
+});
+
+
+container.innerHTML=html;
+
+}
+
+
+/* SALES TABLE */
+
+function showSalesTable(){
+
+let sales=getSales();
+
+let search=
+document.getElementById("salesSearch")
+.value
+.trim()
+.toLowerCase();
+
+let sort=
+document.getElementById("salesSort")
+.value;
+
+
+sales=sales.filter(function(sale){
+
+return sale.name
+.toLowerCase()
+.includes(search);
+
+});
+
+
+if(sort==="high"){
+
+sales.sort(function(a,b){
+
+return Number(b.total)-Number(a.total);
+
+});
+
+}
+
+else if(sort==="low"){
+
+sales.sort(function(a,b){
+
+return Number(a.total)-Number(b.total);
+
+});
+
+}
+
+else if(sort==="quantity"){
+
+sales.sort(function(a,b){
+
+return Number(b.quantity)-Number(a.quantity);
+
+});
+
+}
+
+else{
+
+sales.reverse();
+
+}
+
+
+let html="";
+
+
+sales.forEach(function(sale,index){
+
+html+=`
+
+<tr>
+
+<td>${index+1}</td>
+
+<td>${escapeHTML(sale.name)}</td>
+
+<td>₹${Number(sale.price).toFixed(2)}</td>
+
+<td>${Number(sale.quantity)}</td>
+
+<td><b>₹${Number(sale.total).toFixed(2)}</b></td>
+
+</tr>
+
+`;
+
+});
+
+
+if(html===""){
+
+html=`
+
+<tr>
+
+<td colspan="5">
+
+<div class="empty">
+🧾 No sales found.
+</div>
+
+</td>
+
+</tr>
+
+`;
+
+}
+
+
+document.getElementById("salesTable")
+.innerHTML=html;
+
+}
+
+
+/* INVENTORY TABLE */
+
+function showInventoryTable(){
+
+let products=getProducts();
+
+let html="";
+
+
+products.forEach(function(product){
+
+let stock=
+Number(product.stock);
+
+let price=
+Number(product.price);
+
+let value=
+stock*price;
+
+let status="Available";
+
+
+if(stock===0){
+
+status="⛔ Out of Stock";
+
+}
+else if(stock<=5){
+
+status="⚠️ Low Stock";
+
+}
+else{
+
+status="✅ Available";
+
+}
+
+
+html+=`
+
+<tr>
+
+<td>
+${escapeHTML(product.name)}
+</td>
+
+<td>
+${escapeHTML(product.id || "-")}
+</td>
+
+<td>
+${escapeHTML(product.category || "General")}
+</td>
+
+<td>
+₹${price.toFixed(2)}
+</td>
+
+<td>
+${stock}
+</td>
+
+<td>
+₹${value.toFixed(2)}
+</td>
+
+<td>
+${status}
+</td>
+
+</tr>
+
+`;
+
+});
+
+
+if(html===""){
+
+html=`
+
+<tr>
+
+<td colspan="7">
+
+<div class="empty">
+📦 No products available.
+</div>
+
+</td>
+
+</tr>
+
+`;
+
+}
+
+
+document.getElementById("inventoryTable")
+.innerHTML=html;
+
+}
+
+
+/* CSV EXPORT */
+
+function exportCSV(){
+
+let products=getProducts();
+
+let sales=getSales();
+
+
+let csv="";
+
+
+csv+="RETAIL STORE REPORT\n\n";
+
+
+csv+="SALES SUMMARY\n";
+
+csv+="Total Revenue,Total Transactions,Products Sold\n";
+
+
+let revenue=0;
+
+let quantity=0;
+
+
+sales.forEach(function(sale){
+
+revenue+=Number(sale.total);
+
+quantity+=Number(sale.quantity);
+
+});
+
+
+csv+=
+revenue.toFixed(2)+","+
+sales.length+","+
+quantity+"\n\n";
+
+
+csv+="SALES DETAILS\n";
+
+csv+="Product,Price,Quantity,Total\n";
+
+
+sales.forEach(function(sale){
+
+csv+=
+'"'+sale.name+'",'+
+Number(sale.price)+","+
+Number(sale.quantity)+","+
+Number(sale.total)+"\n";
+
+});
+
+
+csv+="\nINVENTORY\n";
+
+csv+="Product,SKU,Category,Price,Stock,Inventory Value\n";
+
+
+products.forEach(function(product){
+
+csv+=
+'"'+product.name+'",'+
+'"'+(product.id || "-")+'",'+
+'"'+(product.category || "General")+'",'+
+Number(product.price)+","+
+Number(product.stock)+","+
+(Number(product.price)*Number(product.stock))+
+"\n";
+
+});
+
+
+let blob=
+new Blob(
+[csv],
+{type:"text/csv;charset=utf-8;"}
+);
+
+
+let url=
+URL.createObjectURL(blob);
+
+
+let link=
+document.createElement("a");
+
+
+link.href=url;
+
+link.download=
+"Retail_Store_Report.csv";
+
+
+link.click();
+
+
+URL.revokeObjectURL(url);
+
+}
+
+
+/* ESCAPE HTML */
+
+function escapeHTML(value){
+
+return String(value)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+
+/* START */
+
+loadReport();
+
+</script>
+
+</body>
+</html>

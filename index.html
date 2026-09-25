@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Retail Store Management | Dashboard</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f1f5f9;
+    color:#0f172a;
+}
+
+.header{
+    background:linear-gradient(135deg,#1e3a8a,#2563eb);
+    color:white;
+    padding:18px 30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.12);
+}
+
+.brand h1{
+    font-size:23px;
+    margin-bottom:4px;
+}
+
+.brand p{
+    font-size:13px;
+    opacity:0.85;
+}
+
+.header-actions{
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+.header-btn{
+    border:1px solid rgba(255,255,255,0.35);
+    background:rgba(255,255,255,0.12);
+    color:white;
+    padding:10px 15px;
+    border-radius:9px;
+    cursor:pointer;
+    font-weight:700;
+}
+
+.header-btn:hover{
+    background:rgba(255,255,255,0.22);
+}
+
+.logout-btn{
+    background:#dc2626;
+    border:1px solid #dc2626;
+}
+
+.logout-btn:hover{
+    background:#b91c1c;
+}
+
+.container{
+    max-width:1400px;
+    margin:auto;
+    padding:28px;
+}
+
+.welcome{
+    background:white;
+    padding:25px;
+    border-radius:16px;
+    border:1px solid #e2e8f0;
+    margin-bottom:24px;
+}
+
+.welcome h2{
+    font-size:24px;
+    margin-bottom:7px;
+}
+
+.welcome p{
+    color:#64748b;
+    font-size:14px;
+}
+
+.dashboard-tools{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+    gap:15px;
+}
+
+.refresh-btn{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:11px 18px;
+    border-radius:9px;
+    cursor:pointer;
+    font-weight:700;
+}
+
+.refresh-btn:hover{
+    background:#1d4ed8;
+}
+
+.last-update{
+    color:#64748b;
+    font-size:13px;
+}
+
+.section-title{
+    font-size:19px;
+    margin:25px 0 14px;
+}
+
+
+/* KPI */
+
+.kpi-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+}
+
+.kpi-card{
+    background:white;
+    border:1px solid #e2e8f0;
+    border-radius:15px;
+    padding:20px;
+    box-shadow:0 3px 10px rgba(15,23,42,0.04);
+}
+
+.kpi-label{
+    color:#64748b;
+    font-size:13px;
+    font-weight:600;
+    margin-bottom:9px;
+}
+
+.kpi-value{
+    font-size:25px;
+    font-weight:800;
+}
+
+
+/* HIGHLIGHTS */
+
+.highlight-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+}
+
+.highlight-card{
+    background:white;
+    border:1px solid #e2e8f0;
+    border-radius:15px;
+    padding:20px;
+}
+
+.highlight-label{
+    color:#64748b;
+    font-size:13px;
+    margin-bottom:9px;
+}
+
+.highlight-value{
+    font-size:19px;
+    font-weight:800;
+    word-break:break-word;
+}
+
+
+/* INVENTORY HEALTH */
+
+.health-card{
+    background:white;
+    border:1px solid #e2e8f0;
+    border-radius:16px;
+    padding:22px;
+}
+
+.health-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.health-item{
+    margin-bottom:8px;
+}
+
+.health-top{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:8px;
+    font-size:14px;
+    font-weight:700;
+}
+
+.progress{
+    width:100%;
+    height:10px;
+    background:#e2e8f0;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress-bar{
+    height:100%;
+    border-radius:20px;
+}
+
+.available{
+    background:#16a34a;
+}
+
+.low{
+    background:#f59e0b;
+}
+
+.out{
+    background:#dc2626;
+}
+
+
+/* QUICK ACTIONS */
+
+.quick-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+}
+
+.quick-card{
+    background:white;
+    border:1px solid #e2e8f0;
+    border-radius:15px;
+    padding:20px;
+    cursor:pointer;
+    text-decoration:none;
+    color:#0f172a;
+    transition:0.2s;
+}
+
+.quick-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px rgba(15,23,42,0.08);
+}
+
+.quick-icon{
+    font-size:25px;
+    margin-bottom:10px;
+}
+
+.quick-card h3{
+    font-size:16px;
+    margin-bottom:5px;
+}
+
+.quick-card p{
+    color:#64748b;
+    font-size:13px;
+}
+
+
+/* TABLE */
+
+.table-card{
+    background:white;
+    border:1px solid #e2e8f0;
+    border-radius:16px;
+    overflow:hidden;
+}
+
+.table-wrapper{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,
+td{
+    padding:14px 16px;
+    text-align:left;
+    border-bottom:1px solid #e2e8f0;
+    font-size:14px;
+}
+
+th{
+    background:#f8fafc;
+    color:#475569;
+    font-size:13px;
+}
+
+tr:last-child td{
+    border-bottom:none;
+}
+
+.status{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:700;
+}
+
+.status-sale{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.status-low{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+.status-out{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.empty{
+    text-align:center;
+    padding:25px;
+    color:#94a3b8;
+}
+
+
+/* FOOTER */
+
+.footer{
+    text-align:center;
+    color:#94a3b8;
+    font-size:12px;
+    padding:30px 10px 10px;
+}
+
+
+/* MOBILE */
+
+@media(max-width:1100px){
+
+    .kpi-grid,
+    .highlight-grid,
+    .quick-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:700px){
+
+    .header{
+        padding:16px;
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .header-actions{
+        width:100%;
+    }
+
+    .header-btn{
+        flex:1;
+    }
+
+    .container{
+        padding:16px;
+    }
+
+    .kpi-grid,
+    .highlight-grid,
+    .quick-grid,
+    .health-grid{
+        grid-template-columns:1fr;
+    }
+
+    .dashboard-tools{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .refresh-btn{
+        width:100%;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<header class="header">
+
+    <div class="brand">
+
+        <h1>Retail Store Management</h1>
+
+        <p>Smart Store Business Dashboard</p>
+
+    </div>
+
+
+    <div class="header-actions">
+
+        <button
+            class="header-btn"
+            onclick="loadDashboard()">
+
+            ↻ Refresh
+
+        </button>
+
+
+       <a
+    href="login.html"
+    class="header-btn logout-btn"
+    style="text-decoration:none; display:inline-block;">
+
+    Logout
+
+</a>
+
+    </div>
+
+</header>
+
+
+
+<div class="container">
+
+
+    <!-- WELCOME -->
+
+    <section class="welcome">
+
+        <h2>Welcome to your Store Dashboard 👋</h2>
+
+        <p>
+            Monitor sales, inventory, products and business performance
+            from one place.
+        </p>
+
+    </section>
+
+
+
+    <!-- TOOLS -->
+
+    <div class="dashboard-tools">
+
+        <button
+            class="refresh-btn"
+            onclick="loadDashboard()">
+
+            ↻ Refresh Dashboard
+
+        </button>
+
+
+        <div
+            class="last-update"
+            id="lastUpdate">
+
+            Last updated: -
+
+        </div>
+
+    </div>
+
+
+
+    <!-- KPI -->
+
+    <h2 class="section-title">
+        Business Overview
+    </h2>
+
+
+    <div class="kpi-grid">
+
+
+        <div class="kpi-card">
+
+            <div class="kpi-label">
+                Total Revenue
+            </div>
+
+            <div
+                class="kpi-value"
+                id="totalRevenue">
+
+                ₹0
+
+            </div>
+
+        </div>
+
+
+        <div class="kpi-card">
+
+            <div class="kpi-label">
+                Transactions
+            </div>
+
+            <div
+                class="kpi-value"
+                id="totalTransactions">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <div class="kpi-card">
+
+            <div class="kpi-label">
+                Products Sold
+            </div>
+
+            <div
+                class="kpi-value"
+                id="productsSold">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <div class="kpi-card">
+
+            <div class="kpi-label">
+                Total Products
+            </div>
+
+            <div
+                class="kpi-value"
+                id="totalProducts">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <div class="kpi-card">
+
+            <div class="kpi-label">
+                Total Stock
+            </div>
+
+            <div
+                class="kpi-value"
+                id="totalStock">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <div class="kpi-card">
+
+            <div class="kpi-label">
+                Low Stock
+            </div>
+
+            <div
+                class="kpi-value"
+                id="lowStock">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <div class="kpi-card">
+
+            <div class="kpi-label">
+                Out of Stock
+            </div>
+
+            <div
+                class="kpi-value"
+                id="outStock">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <div class="kpi-card">
+
+            <div class="kpi-label">
+                Inventory Value
+            </div>
+
+            <div
+                class="kpi-value"
+                id="inventoryValue">
+
+                ₹0
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- BUSINESS HIGHLIGHTS -->
+
+    <h2 class="section-title">
+        Business Highlights
+    </h2>
+
+
+    <div class="highlight-grid">
+
+
+        <div class="highlight-card">
+
+            <div class="highlight-label">
+                Top Selling Product
+            </div>
+
+            <div
+                class="highlight-value"
+                id="topProduct">
+
+                -
+
+            </div>
+
+        </div>
+
+
+        <div class="highlight-card">
+
+            <div class="highlight-label">
+                Units Sold
+            </div>
+
+            <div
+                class="highlight-value"
+                id="topUnits">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <div class="highlight-card">
+
+            <div class="highlight-label">
+                Highest Revenue Product
+            </div>
+
+            <div
+                class="highlight-value"
+                id="topRevenueProduct">
+
+                -
+
+            </div>
+
+        </div>
+
+
+        <div class="highlight-card">
+
+            <div class="highlight-label">
+                Average Order Value
+            </div>
+
+            <div
+                class="highlight-value"
+                id="averageOrder">
+
+                ₹0
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- INVENTORY HEALTH -->
+
+    <h2 class="section-title">
+        Inventory Health
+    </h2>
+
+
+    <div class="health-card">
+
+        <div class="health-grid">
+
+
+            <div class="health-item">
+
+                <div class="health-top">
+
+                    <span>Available Products</span>
+
+                    <span id="availablePercent">
+                        0%
+                    </span>
+
+                </div>
+
+                <div class="progress">
+
+                    <div
+                        class="progress-bar available"
+                        id="availableBar"
+                        style="width:0%">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="health-item">
+
+                <div class="health-top">
+
+                    <span>Low Stock Products</span>
+
+                    <span id="lowPercent">
+                        0%
+                    </span>
+
+                </div>
+
+                <div class="progress">
+
+                    <div
+                        class="progress-bar low"
+                        id="lowBar"
+                        style="width:0%">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="health-item">
+
+                <div class="health-top">
+
+                    <span>Out of Stock</span>
+
+                    <span id="outPercent">
+                        0%
+                    </span>
+
+                </div>
+
+                <div class="progress">
+
+                    <div
+                        class="progress-bar out"
+                        id="outBar"
+                        style="width:0%">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- QUICK ACTIONS -->
+
+    <h2 class="section-title">
+        Quick Actions
+    </h2>
+
+
+    <div class="quick-grid">
+
+
+        <a
+            href="products.html"
+            class="quick-card">
+
+            <div class="quick-icon">📦</div>
+
+            <h3>Manage Products</h3>
+
+            <p>
+                Add, edit, search and manage products.
+            </p>
+
+        </a>
+
+
+        <a
+            href="stock.html"
+            class="quick-card">
+
+            <div class="quick-icon">📊</div>
+
+            <h3>Manage Stock</h3>
+
+            <p>
+                Update and monitor inventory stock.
+            </p>
+
+        </a>
+
+
+        <a
+            href="sales.html"
+            class="quick-card">
+
+            <div class="quick-icon">💰</div>
+
+            <h3>Manage Sales</h3>
+
+            <p>
+                Create sales and track transactions.
+            </p>
+
+        </a>
+
+
+        <a
+            href="reports.html"
+            class="quick-card">
+
+            <div class="quick-icon">📈</div>
+
+            <h3>View Reports</h3>
+
+            <p>
+                Analyze sales and inventory reports.
+            </p>
+
+        </a>
+
+    </div>
+
+
+
+    <!-- RECENT SALES -->
+
+    <h2 class="section-title">
+        Recent Sales
+    </h2>
+
+
+    <div class="table-card">
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Product</th>
+
+                        <th>Quantity</th>
+
+                        <th>Price</th>
+
+                        <th>Total</th>
+
+                        <th>Date</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="recentSalesTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- STOCK ALERTS -->
+
+    <h2 class="section-title">
+        Stock Alerts
+    </h2>
+
+
+    <div class="table-card">
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Product</th>
+
+                        <th>SKU</th>
+
+                        <th>Stock</th>
+
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="stockAlertsTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="footer">
+
+        Retail Store Management System • Portfolio Project
+
+    </div>
+
+
+</div>
+
+
+
+<script>
+
+
+/* =========================
+   GET PRODUCTS
+========================= */
+
+function getProducts(){
+
+    return JSON.parse(
+        localStorage.getItem("products")
+    ) || [];
+
+}
+
+
+/* =========================
+   GET SALES
+========================= */
+
+function getSales(){
+
+    return JSON.parse(
+        localStorage.getItem("sales")
+    ) || [];
+
+}
+
+
+/* =========================
+   FORMAT MONEY
+========================= */
+
+function money(value){
+
+    return "₹" + Number(value || 0)
+        .toLocaleString("en-IN", {
+            maximumFractionDigits:2
+        });
+
+}
+
+
+/* =========================
+   LOAD DASHBOARD
+========================= */
+
+function loadDashboard(){
+
+    let products = getProducts();
+
+    let sales = getSales();
+
+
+    let revenue = 0;
+
+    let quantity = 0;
+
+    let inventoryValue = 0;
+
+
+    let productSales = {};
+
+    let productRevenue = {};
+
+
+    /* SALES CALCULATION */
+
+    sales.forEach(function(sale){
+
+        let total =
+            Number(sale.total) || 0;
+
+        let qty =
+            Number(sale.quantity) || 0;
+
+        revenue += total;
+
+        quantity += qty;
+
+
+        let name =
+            sale.name || "Unknown";
+
+
+        if(!productSales[name]){
+            productSales[name] = 0;
+        }
+
+        productSales[name] += qty;
+
+
+        if(!productRevenue[name]){
+            productRevenue[name] = 0;
+        }
+
+        productRevenue[name] += total;
+
+    });
+
+
+    /* INVENTORY CALCULATION */
+
+    let totalStock = 0;
+
+    let lowStock = 0;
+
+    let outStock = 0;
+
+    let available = 0;
+
+
+    products.forEach(function(product){
+
+        let stock =
+            Number(product.stock) || 0;
+
+        let price =
+            Number(product.price) || 0;
+
+
+        totalStock += stock;
+
+        inventoryValue +=
+            stock * price;
+
+
+        if(stock === 0){
+
+            outStock++;
+
+        }
+
+        else if(stock <= 5){
+
+            lowStock++;
+
+        }
+
+        else{
+
+            available++;
+
+        }
+
+    });
+
+
+    /* KPI */
+
+    document.getElementById(
+        "totalRevenue"
+    ).innerText = money(revenue);
+
+
+    document.getElementById(
+        "totalTransactions"
+    ).innerText = sales.length;
+
+
+    document.getElementById(
+        "productsSold"
+    ).innerText = quantity;
+
+
+    document.getElementById(
+        "totalProducts"
+    ).innerText = products.length;
+
+
+    document.getElementById(
+        "totalStock"
+    ).innerText = totalStock;
+
+
+    document.getElementById(
+        "lowStock"
+    ).innerText = lowStock;
+
+
+    document.getElementById(
+        "outStock"
+    ).innerText = outStock;
+
+
+    document.getElementById(
+        "inventoryValue"
+    ).innerText = money(inventoryValue);
+
+
+
+    /* TOP SELLING PRODUCT */
+
+    let topProduct = "-";
+
+    let topUnits = 0;
+
+
+    Object.keys(productSales).forEach(function(name){
+
+        if(productSales[name] > topUnits){
+
+            topUnits =
+                productSales[name];
+
+            topProduct = name;
+
+        }
+
+    });
+
+
+    document.getElementById(
+        "topProduct"
+    ).innerText = topProduct;
+
+
+    document.getElementById(
+        "topUnits"
+    ).innerText = topUnits;
+
+
+
+    /* HIGHEST REVENUE PRODUCT */
+
+    let topRevenueProduct = "-";
+
+    let highestRevenue = 0;
+
+
+    Object.keys(productRevenue).forEach(function(name){
+
+        if(productRevenue[name] > highestRevenue){
+
+            highestRevenue =
+                productRevenue[name];
+
+            topRevenueProduct = name;
+
+        }
+
+    });
+
+
+    document.getElementById(
+        "topRevenueProduct"
+    ).innerText =
+        topRevenueProduct;
+
+
+    /* AVERAGE ORDER VALUE */
+
+    let averageOrder =
+        sales.length > 0
+        ? revenue / sales.length
+        : 0;
+
+
+    document.getElementById(
+        "averageOrder"
+    ).innerText =
+        money(averageOrder);
+
+
+
+    /* INVENTORY HEALTH */
+
+    let totalProducts =
+        products.length;
+
+
+    let availablePercent = 0;
+
+    let lowPercent = 0;
+
+    let outPercent = 0;
+
+
+    if(totalProducts > 0){
+
+        availablePercent =
+            (available / totalProducts) * 100;
+
+        lowPercent =
+            (lowStock / totalProducts) * 100;
+
+        outPercent =
+            (outStock / totalProducts) * 100;
+
+    }
+
+
+    document.getElementById(
+        "availablePercent"
+    ).innerText =
+        Math.round(availablePercent) + "%";
+
+
+    document.getElementById(
+        "lowPercent"
+    ).innerText =
+        Math.round(lowPercent) + "%";
+
+
+    document.getElementById(
+        "outPercent"
+    ).innerText =
+        Math.round(outPercent) + "%";
+
+
+    document.getElementById(
+        "availableBar"
+    ).style.width =
+        availablePercent + "%";
+
+
+    document.getElementById(
+        "lowBar"
+    ).style.width =
+        lowPercent + "%";
+
+
+    document.getElementById(
+        "outBar"
+    ).style.width =
+        outPercent + "%";
+
+
+
+    /* TABLES */
+
+    showRecentSales(sales);
+
+    showStockAlerts(products);
+
+
+    document.getElementById(
+        "lastUpdate"
+    ).innerText =
+        "Last updated: " +
+        new Date().toLocaleString("en-IN");
+
+}
+
+
+/* =========================
+   RECENT SALES
+========================= */
+
+function showRecentSales(sales){
+
+    let table =
+        document.getElementById(
+            "recentSalesTable"
+        );
+
+
+    table.innerHTML = "";
+
+
+    if(sales.length === 0){
+
+        table.innerHTML =
+            '<tr><td colspan="5" class="empty">No sales recorded yet.</td></tr>';
+
+        return;
+
+    }
+
+
+    let recent =
+        sa

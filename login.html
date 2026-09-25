@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Smart Store | Login</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:linear-gradient(135deg,#eef2ff,#f8fafc,#e0f2fe);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    color:#0f172a;
+}
+
+.container{
+    width:100%;
+    max-width:440px;
+}
+
+.login-card{
+    background:white;
+    border:1px solid #e2e8f0;
+    border-radius:22px;
+    padding:35px;
+    box-shadow:0 20px 50px rgba(15,23,42,0.12);
+}
+
+.logo{
+    width:65px;
+    height:65px;
+    border-radius:18px;
+    background:linear-gradient(135deg,#2563eb,#4f46e5);
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    font-weight:bold;
+    margin:0 auto 18px;
+}
+
+.title{
+    text-align:center;
+    font-size:26px;
+    font-weight:800;
+    margin-bottom:7px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#64748b;
+    font-size:14px;
+    margin-bottom:30px;
+}
+
+.form-group{
+    margin-bottom:18px;
+}
+
+label{
+    display:block;
+    font-size:14px;
+    font-weight:700;
+    margin-bottom:8px;
+    color:#334155;
+}
+
+input{
+    width:100%;
+    padding:13px 14px;
+    border:1px solid #cbd5e1;
+    border-radius:11px;
+    font-size:15px;
+    outline:none;
+    transition:0.2s;
+}
+
+input:focus{
+    border-color:#2563eb;
+    box-shadow:0 0 0 3px rgba(37,99,235,0.10);
+}
+
+.password-box{
+    position:relative;
+}
+
+.password-box input{
+    padding-right:80px;
+}
+
+.show-btn{
+    position:absolute;
+    right:10px;
+    top:50%;
+    transform:translateY(-50%);
+    border:none;
+    background:none;
+    color:#2563eb;
+    font-weight:700;
+    cursor:pointer;
+    font-size:13px;
+}
+
+.login-btn{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:11px;
+    background:linear-gradient(135deg,#2563eb,#4f46e5);
+    color:white;
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+    transition:0.2s;
+}
+
+.login-btn:hover{
+    transform:translateY(-1px);
+    box-shadow:0 8px 20px rgba(37,99,235,0.25);
+}
+
+.message{
+    min-height:22px;
+    text-align:center;
+    margin-top:15px;
+    font-size:14px;
+    font-weight:600;
+}
+
+.success{
+    color:#15803d;
+}
+
+.error{
+    color:#dc2626;
+}
+
+.change-password-btn{
+    width:100%;
+    margin-top:18px;
+    padding:12px;
+    border:1px solid #cbd5e1;
+    border-radius:11px;
+    background:white;
+    color:#334155;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.change-password-btn:hover{
+    background:#f8fafc;
+}
+
+.demo-info{
+    margin-top:20px;
+    padding:13px;
+    border-radius:11px;
+    background:#f8fafc;
+    border:1px solid #e2e8f0;
+    text-align:center;
+    font-size:12px;
+    color:#64748b;
+}
+
+.footer{
+    text-align:center;
+    margin-top:20px;
+    font-size:12px;
+    color:#94a3b8;
+}
+
+
+/* CHANGE PASSWORD MODAL */
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(15,23,42,0.55);
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    z-index:1000;
+}
+
+.modal-card{
+    width:100%;
+    max-width:430px;
+    background:white;
+    border-radius:20px;
+    padding:28px;
+    box-shadow:0 25px 60px rgba(0,0,0,0.25);
+}
+
+.modal-title{
+    font-size:22px;
+    font-weight:800;
+    margin-bottom:6px;
+}
+
+.modal-subtitle{
+    color:#64748b;
+    font-size:13px;
+    margin-bottom:22px;
+}
+
+.modal-actions{
+    display:flex;
+    gap:10px;
+    margin-top:20px;
+}
+
+.modal-actions button{
+    flex:1;
+    padding:12px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:700;
+}
+
+.cancel-btn{
+    background:white;
+    border:1px solid #cbd5e1;
+}
+
+.save-btn{
+    background:#2563eb;
+    color:white;
+    border:1px solid #2563eb;
+}
+
+.modal-message{
+    text-align:center;
+    font-size:13px;
+    font-weight:600;
+    min-height:20px;
+    margin-top:12px;
+}
+
+@media(max-width:500px){
+
+    .login-card{
+        padding:25px 20px;
+    }
+
+    .title{
+        font-size:23px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="login-card">
+
+        <div class="logo">
+            RS
+        </div>
+
+        <div class="title">
+            Retail Store Management
+        </div>
+
+        <div class="subtitle">
+            Smart Store Business Dashboard
+        </div>
+
+
+        <!-- LOGIN FORM -->
+
+        <form id="loginForm">
+
+            <div class="form-group">
+
+                <label for="username">
+                    Username
+                </label>
+
+                <input
+                    type="text"
+                    id="username"
+                    placeholder="Enter username"
+                    autocomplete="username"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <div class="password-box">
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Enter password"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="show-btn"
+                        onclick="togglePassword()"
+                        id="showBtn">
+                        Show
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="login-btn">
+                Login
+            </button>
+
+            <div
+                id="message"
+                class="message">
+            </div>
+
+        </form>
+
+
+        <!-- CHANGE PASSWORD -->
+
+        <button
+            type="button"
+            class="change-password-btn"
+            onclick="openChangePassword()">
+            🔑 Change Password
+        </button>
+
+
+        <div class="demo-info">
+            Demo Username: <b>admin</b><br>
+            Default Password: <b>1234</b>
+        </div>
+
+    </div>
+
+
+    <div class="footer">
+        Retail Store Management System • Portfolio Project
+    </div>
+
+</div>
+
+
+
+<!-- CHANGE PASSWORD MODAL -->
+
+<div
+    class="modal"
+    id="passwordModal">
+
+    <div class="modal-card">
+
+        <div class="modal-title">
+            Change Password
+        </div>
+
+        <div class="modal-subtitle">
+            Update your login password
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Current Password
+            </label>
+
+            <input
+                type="password"
+                id="currentPassword"
+                placeholder="Enter current password">
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                New Password
+            </label>
+
+            <input
+                type="password"
+                id="newPassword"
+                placeholder="Enter new password">
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Confirm New Password
+            </label>
+
+            <input
+                type="password"
+                id="confirmPassword"
+                placeholder="Confirm new password">
+
+        </div>
+
+
+        <div
+            id="modalMessage"
+            class="modal-message">
+        </div>
+
+
+        <div class="modal-actions">
+
+            <button
+                class="cancel-btn"
+                onclick="closeChangePassword()">
+                Cancel
+            </button>
+
+            <button
+                class="save-btn"
+                onclick="saveNewPassword()">
+                Save Password
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+/* ================================
+   DEFAULT LOGIN DETAILS
+================================ */
+
+const DEFAULT_USERNAME = "admin";
+const DEFAULT_PASSWORD = "1234";
+
+
+/* ================================
+   GET SAVED PASSWORD
+================================ */
+
+function getPassword(){
+
+    let savedPassword =
+        localStorage.getItem("loginPassword");
+
+    if(savedPassword === null){
+
+        localStorage.setItem(
+            "loginPassword",
+            DEFAULT_PASSWORD
+        );
+
+        return DEFAULT_PASSWORD;
+    }
+
+    return savedPassword;
+}
+
+
+/* ================================
+   LOGIN
+================================ */
+
+document
+.getElementById("loginForm")
+.addEventListener("submit", function(event){
+
+    event.preventDefault();
+
+    let username =
+        document.getElementById("username").value.trim();
+
+    let password =
+        document.getElementById("password").value;
+
+    let message =
+        document.getElementById("message");
+
+
+    if(
+        username === DEFAULT_USERNAME &&
+        password === getPassword()
+    ){
+
+        message.className =
+            "message success";
+
+        message.innerText =
+            "✓ Login successful. Opening dashboard...";
+
+
+        setTimeout(function(){
+
+            window.location.href = "index.html";
+
+        },700);
+
+    }
+
+    else{
+
+        message.className =
+            "message error";
+
+        message.innerText =
+            "❌ Invalid username or password";
+
+        document
+        .getElementById("password")
+        .focus();
+
+    }
+
+});
+
+
+/* ================================
+   SHOW / HIDE PASSWORD
+================================ */
+
+function togglePassword(){
+
+    let password =
+        document.getElementById("password");
+
+    let showBtn =
+        document.getElementById("showBtn");
+
+
+    if(password.type === "password"){
+
+        password.type = "text";
+
+        showBtn.innerText = "Hide";
+
+    }
+
+    else{
+
+        password.type = "password";
+
+        showBtn.innerText = "Show";
+
+    }
+
+}
+
+
+/* ================================
+   OPEN CHANGE PASSWORD
+================================ */
+
+function openChangePassword(){
+
+    document
+    .getElementById("passwordModal")
+    .style.display = "flex";
+
+    document
+    .getElementById("currentPassword")
+    .focus();
+
+}
+
+
+/* ================================
+   CLOSE CHANGE PASSWORD
+================================ */
+
+function closeChangePassword(){
+
+    document
+    .getElementById("passwordModal")
+    .style.display = "none";
+
+
+    document
+    .getElementById("currentPassword")
+    .value = "";
+
+    document
+    .getElementById("newPassword")
+    .value = "";
+
+    document
+    .getElementById("confirmPassword")
+    .value = "";
+
+    document
+    .getElementById("modalMessage")
+    .innerText = "";
+
+}
+
+
+/* ================================
+   SAVE NEW PASSWORD
+================================ */
+
+function saveNewPassword(){
+
+    let current =
+        document
+        .getElementById("currentPassword")
+        .value;
+
+    let newPassword =
+        document
+        .getElementById("newPassword")
+        .value;
+
+    let confirmPassword =
+        document
+        .getElementById("confirmPassword")
+        .value;
+
+    let message =
+        document
+        .getElementById("modalMessage");
+
+
+    message.className =
+        "modal-message";
+
+
+    /* CURRENT PASSWORD CHECK */
+
+    if(current !== getPassword()){
+
+        message.className =
+            "modal-message error";
+
+        message.innerText =
+            "❌ Current password is incorrect.";
+
+        return;
+    }
+
+
+    /* NEW PASSWORD LENGTH */
+
+    if(newPassword.length < 4){
+
+        message.className =
+            "modal-message error";
+
+        message.innerText =
+            "❌ Password must contain at least 4 characters.";
+
+        return;
+    }
+
+
+    /* CONFIRM PASSWORD */
+
+    if(newPassword !== confirmPassword){
+
+        message.className =
+            "modal-message error";
+
+        message.innerText =
+            "❌ New passwords do not match.";
+
+        return;
+    }
+
+
+    /* SAVE PASSWORD */
+
+    localStorage.setItem(
+        "loginPassword",
+        newPassword
+    );
+
+
+    message.className =
+        "modal-message success";
+
+    message.innerText =
+        "✓ Password changed successfully.";
+
+
+    setTimeout(function(){
+
+        closeChangePassword();
+
+    },1000);
+
+}
+
+
+/* ================================
+   ENTER KEY SUPPORT
+================================ */
+
+document
+.getElementById("username")
+.addEventListener("keydown", function(event){
+
+    if(event.key === "Enter"){
+
+        event.preventDefault();
+
+        document
+        .getElementById("password")
+        .focus();
+
+    }
+
+});
+
+
+/* ================================
+   MODAL ENTER SUPPORT
+================================ */
+
+document
+.getElementById("confirmPassword")
+.addEventListener("keydown", function(event){
+
+    if(event.key === "Enter"){
+
+        event.preventDefault();
+
+        saveNewPassword();
+
+    }
+
+});
+
+
+/* ================================
+   CLOSE MODAL BY CLICKING OUTSIDE
+================================ */
+
+document
+.getElementById("passwordModal")
+.addEventListener("click", function(event){
+
+    if(event.target === this){
+
+        closeChangePassword();
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Sales Management | Retail Store</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f4f6f8;
+    color:#222;
+}
+
+/* HEADER */
+
+.header{
+    background:#1f2937;
+    color:white;
+    padding:22px 30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+}
+
+.header h1{
+    font-size:25px;
+}
+
+.header p{
+    margin-top:5px;
+    color:#d1d5db;
+    font-size:14px;
+}
+
+.home-button{
+    background:white;
+    color:#1f2937;
+    border:none;
+    padding:10px 16px;
+    border-radius:7px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.home-button:hover{
+    background:#e5e7eb;
+}
+
+/* CONTAINER */
+
+.container{
+    max-width:1200px;
+    margin:25px auto;
+    padding:0 18px;
+}
+
+/* SUMMARY */
+
+.summary{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.summary-card{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 3px 10px rgba(0,0,0,0.08);
+}
+
+.summary-card h3{
+    font-size:14px;
+    color:#6b7280;
+    margin-bottom:8px;
+}
+
+.summary-card .value{
+    font-size:25px;
+    font-weight:bold;
+}
+
+/* SALE FORM */
+
+.card{
+    background:white;
+    border-radius:12px;
+    padding:25px;
+    box-shadow:0 3px 10px rgba(0,0,0,0.08);
+    margin-bottom:25px;
+}
+
+.card-title{
+    font-size:20px;
+    font-weight:bold;
+    margin-bottom:20px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr;
+    gap:15px;
+}
+
+.input-group{
+    display:flex;
+    flex-direction:column;
+}
+
+.input-group label{
+    font-size:13px;
+    font-weight:bold;
+    margin-bottom:7px;
+    color:#374151;
+}
+
+.input-group input{
+    padding:12px;
+    border:1px solid #d1d5db;
+    border-radius:7px;
+    outline:none;
+    font-size:15px;
+}
+
+.input-group input:focus{
+    border-color:#2563eb;
+}
+
+.stock-info{
+    margin-top:15px;
+    background:#eff6ff;
+    padding:12px;
+    border-radius:7px;
+    color:#1d4ed8;
+}
+
+.total-box{
+    margin-top:15px;
+    background:#f0fdf4;
+    padding:15px;
+    border-radius:8px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.total-box span{
+    font-weight:bold;
+}
+
+.total-amount{
+    font-size:25px;
+    font-weight:bold;
+    color:#15803d;
+}
+
+.button-row{
+    display:flex;
+    gap:10px;
+    margin-top:18px;
+}
+
+.sale-button,
+.clear-button,
+.refresh-button{
+    border:none;
+    padding:12px 20px;
+    border-radius:7px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.sale-button{
+    background:#16a34a;
+    color:white;
+}
+
+.sale-button:hover{
+    background:#15803d;
+}
+
+.clear-button{
+    background:#e5e7eb;
+    color:#111827;
+}
+
+.clear-button:hover{
+    background:#d1d5db;
+}
+
+/* SEARCH */
+
+.tools{
+    display:flex;
+    gap:12px;
+    margin-bottom:20px;
+    flex-wrap:wrap;
+}
+
+.search-box{
+    flex:1;
+    min-width:220px;
+    padding:12px;
+    border:1px solid #d1d5db;
+    border-radius:7px;
+}
+
+.sort-box{
+    padding:12px;
+    border:1px solid #d1d5db;
+    border-radius:7px;
+    background:white;
+}
+
+/* SALES LIST */
+
+.sales-list{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.sale-item{
+    background:#f9fafb;
+    border:1px solid #e5e7eb;
+    border-radius:10px;
+    padding:18px;
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:15px;
+}
+
+.sale-main{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr 1fr;
+    gap:15px;
+    align-items:center;
+}
+
+.sale-label{
+    font-size:12px;
+    color:#6b7280;
+    margin-bottom:4px;
+}
+
+.sale-value{
+    font-weight:bold;
+}
+
+.sale-total{
+    color:#15803d;
+    font-size:18px;
+}
+
+.delete-button{
+    background:#fee2e2;
+    color:#b91c1c;
+    border:none;
+    padding:9px 13px;
+    border-radius:6px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.delete-button:hover{
+    background:#fecaca;
+}
+
+.empty{
+    text-align:center;
+    padding:35px;
+    color:#6b7280;
+}
+
+/* PRODUCT SUGGESTION */
+
+.suggestion{
+    font-size:12px;
+    color:#6b7280;
+    margin-top:5px;
+}
+
+/* FOOTER */
+
+.footer{
+    text-align:center;
+    color:#6b7280;
+    font-size:13px;
+    padding:20px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:850px){
+
+    .summary{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .sale-main{
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+@media(max-width:550px){
+
+    .header{
+        padding:18px;
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .header h1{
+        font-size:21px;
+    }
+
+    .summary{
+        grid-template-columns:1fr;
+    }
+
+    .container{
+        padding:0 12px;
+    }
+
+    .card{
+        padding:18px;
+    }
+
+    .sale-item{
+        grid-template-columns:1fr;
+    }
+
+    .sale-main{
+        grid-template-columns:1fr;
+    }
+
+    .button-row{
+        flex-direction:column;
+    }
+
+    .sale-button,
+    .clear-button{
+        width:100%;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<div class="header">
+
+    <div>
+        <h1>💰 Sales Management</h1>
+        <p>Retail Store Sales & Transaction Management</p>
+    </div>
+
+    <button class="home-button" onclick="location.href='index.html'">
+        🏠 Back to Home
+    </button>
+
+</div>
+
+
+<div class="container">
+
+<!-- SUMMARY -->
+
+<div class="summary">
+
+    <div class="summary-card">
+        <h3>Total Revenue</h3>
+        <div class="value" id="totalRevenue">₹0</div>
+    </div>
+
+    <div class="summary-card">
+        <h3>Total Transactions</h3>
+        <div class="value" id="totalTransactions">0</div>
+    </div>
+
+    <div class="summary-card">
+        <h3>Products Sold</h3>
+        <div class="value" id="productsSold">0</div>
+    </div>
+
+    <div class="summary-card">
+        <h3>Average Sale</h3>
+        <div class="value" id="averageSale">₹0</div>
+    </div>
+
+</div>
+
+
+<!-- NEW SALE -->
+
+<div class="card">
+
+    <div class="card-title">
+        ➕ Create New Sale
+    </div>
+
+    <div class="form-grid">
+
+        <div class="input-group">
+
+            <label>Product Name</label>
+
+            <input
+                type="text"
+                id="productName"
+                placeholder="Enter product name"
+                list="productSuggestions"
+                autocomplete="off"
+            >
+
+            <datalist id="productSuggestions"></datalist>
+
+            <div class="suggestion">
+                Start typing to select an existing product
+            </div>
+
+        </div>
+
+
+        <div class="input-group">
+
+            <label>Price (₹)</label>
+
+            <input
+                type="number"
+                id="price"
+                placeholder="Enter price"
+                min="0"
+                step="0.01"
+            >
+
+        </div>
+
+
+        <div class="input-group">
+
+            <label>Quantity</label>
+
+            <input
+                type="number"
+                id="quantity"
+                placeholder="Enter quantity"
+                min="1"
+                step="1"
+            >
+
+        </div>
+
+    </div>
+
+
+    <div class="stock-info">
+        📦 Available Stock:
+        <b id="availableStock">-</b>
+    </div>
+
+
+    <div class="total-box">
+
+        <span>Sale Total</span>
+
+        <span class="total-amount" id="saleTotal">
+            ₹0
+        </span>
+
+    </div>
+
+
+    <div class="button-row">
+
+        <button class="sale-button" onclick="addSale()">
+            💰 Add Sale
+        </button>
+
+        <button class="clear-button" onclick="clearForm()">
+            🧹 Clear
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- SALES HISTORY -->
+
+<div class="card">
+
+    <div class="card-title">
+        📋 Sales Transactions
+    </div>
+
+
+    <div class="tools">
+
+        <input
+            type="text"
+            id="searchBox"
+            class="search-box"
+            placeholder="🔎 Search product..."
+            oninput="showSales()"
+        >
+
+
+        <select
+            id="sortBox"
+            class="sort-box"
+            onchange="showSales()"
+        >
+
+            <option value="latest">
+                Latest First
+            </option>
+
+            <option value="highest">
+                Highest Amount
+            </option>
+
+            <option value="lowest">
+                Lowest Amount
+            </option>
+
+            <option value="quantity">
+                Highest Quantity
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <div id="salesList" class="sales-list"></div>
+
+</div>
+
+</div>
+
+
+<div class="footer">
+    Retail Store Management App • Sales Module
+</div>
+
+
+<script>
+
+/* GET PRODUCTS */
+
+function getProducts(){
+
+    return JSON.parse(
+        localStorage.getItem("products")
+    ) || [];
+
+}
+
+
+/* GET SALES */
+
+function getSales(){
+
+    return JSON.parse(
+        localStorage.getItem("sales")
+    ) || [];
+
+}
+
+
+/* SAVE PRODUCTS */
+
+function saveProducts(products){
+
+    localStorage.setItem(
+        "products",
+        JSON.stringify(products)
+    );
+
+}
+
+
+/* SAVE SALES */
+
+function saveSales(sales){
+
+    localStorage.setItem(
+        "sales",
+        JSON.stringify(sales)
+    );
+
+}
+
+
+/* LOAD PRODUCT SUGGESTIONS */
+
+function loadProductSuggestions(){
+
+    let products = getProducts();
+
+    let datalist =
+        document.getElementById("productSuggestions");
+
+    datalist.innerHTML = "";
+
+    products.forEach(function(product){
+
+        let option =
+            document.createElement("option");
+
+        option.value = product.name;
+
+        datalist.appendChild(option);
+
+    });
+
+}
+
+
+/* FIND PRODUCT */
+
+function findProduct(name){
+
+    let products = getProducts();
+
+    return products.find(function(product){
+
+        return product.name.toLowerCase()
+            === name.trim().toLowerCase();
+
+    });
+
+}
+
+
+/* SHOW AVAILABLE STOCK */
+
+function showAvailableStock(){
+
+    let name =
+        document.getElementById("productName")
+        .value
+        .trim();
+
+    let product = findProduct(name);
+
+    let stockElement =
+        document.getElementById("availableStock");
+
+    if(!product){
+
+        stockElement.innerText = "-";
+
+        return;
+
+    }
+
+    stockElement.innerText =
+        Number(product.stock);
+
+    /* Automatically fill price */
+
+    document.getElementById("price").value =
+        Number(product.price);
+
+    calculateTotal();
+
+}
+
+
+/* CALCULATE TOTAL */
+
+function calculateTotal(){
+
+    let price =
+        Number(document.getElementById("price").value) || 0;
+
+    let quantity =
+        Number(document.getElementById("quantity").value) || 0;
+
+    let total = price * quantity;
+
+    document.getElementById("saleTotal").innerText =
+        "₹" + total.toFixed(2);
+
+}
+
+
+/* ADD SALE */
+
+function addSale(){
+
+    let name =
+        document.getElementById("productName")
+        .value
+        .trim();
+
+    let price =
+        Number(document.getElementById("price").value);
+
+    let quantity =
+        Number(document.getElementById("quantity").value);
+
+
+    /* VALIDATION */
+
+    if(name === ""){
+
+        alert("❌ Please enter product name.");
+
+        return;
+
+    }
+
+
+    if(isNaN(price) || price <= 0){
+
+        alert("❌ Please enter a valid price.");
+
+        return;
+
+    }
+
+
+    if(
+        isNaN(quantity) ||
+        quantity <= 0 ||
+        !Number.isInteger(quantity)
+    ){
+
+        alert("❌ Please enter a valid whole quantity.");
+
+        return;
+
+    }
+
+
+    let products = getProducts();
+
+    let productIndex =
+        products.findIndex(function(product){
+
+            return product.name.toLowerCase()
+                === name.toLowerCase();
+
+        });
+
+
+    if(productIndex === -1){
+
+        alert(
+            "❌ Product not found.\n\n" +
+            "Please add this product from Products page first."
+        );
+
+        return;
+
+    }
+
+
+    let product = products[productIndex];
+
+    let currentStock =
+        Number(product.stock);
+
+
+    /* STOCK CHECK */
+
+    if(quantity > currentStock){
+
+        alert(
+            "❌ Insufficient Stock\n\n" +
+            "Product: " + product.name +
+            "\nAvailable: " + currentStock +
+            "\nRequested: " + quantity
+        );
+
+        return;
+
+    }
+
+
+    let total = price * quantity;
+
+
+    /* SALE OBJECT */
+
+    let sale = {
+
+        name: product.name,
+
+        price: price,
+
+        quantity: quantity,
+
+        total: total,
+
+        date: new Date().toISOString()
+
+    };
+
+
+    let sales = getSales();
+
+    sales.push(sale);
+
+
+    /* REDUCE STOCK */
+
+    products[productIndex].stock =
+        currentStock - quantity;
+
+
+    /* SAVE */
+
+    saveSales(sales);
+
+    saveProducts(products);
+
+
+    alert(
+        "✅ Sale Added Successfully!\n\n" +
+        "Product: " + product.name +
+        "\nQuantity: " + quantity +
+        "\nTotal: ₹" + total.toFixed(2)
+    );
+
+
+    clearForm();
+
+    loadProductSuggestions();
+
+    showSales();
+
+}
+
+
+/* CLEAR FORM */
+
+function clearForm(){
+
+    document.getElementById("productName").value = "";
+
+    document.getElementById("price").value = "";
+
+    document.getElementById("quantity").value = "";
+
+    document.getElementById("availableStock").innerText = "-";
+
+    document.getElementById("saleTotal").innerText = "₹0";
+
+}
+
+
+/* DELETE SALE */
+
+function deleteSale(index){
+
+    let sales = getSales();
+
+    let products = getProducts();
+
+    let sale = sales[index];
+
+
+    if(!sale){
+
+        return;
+
+    }
+
+
+    let confirmDelete =
+        confirm(
+            "Delete this sale?\n\n" +
+            "Product: " + sale.name +
+            "\nQuantity: " + sale.quantity +
+            "\nAmount: ₹" + Number(sale.total).toFixed(2) +
+            "\n\nStock will be restored."
+        );
+
+
+    if(!confirmDelete){
+
+        return;
+
+    }
+
+
+    /* RESTORE STOCK */
+
+    let productIndex =
+        products.findIndex(function(product){
+
+            return product.name.toLowerCase()
+                === sale.name.toLowerCase();
+
+        });
+
+
+    if(productIndex !== -1){
+
+        products[productIndex].stock =
+            Number(products[productIndex].stock)
+            + Number(sale.quantity);
+
+    }
+
+
+    /* DELETE */
+
+    sales.splice(index,1);
+
+
+    saveSales(sales);
+
+    saveProducts(products);
+
+
+    alert("✅ Sale deleted and stock restored.");
+
+    showSales();
+
+    loadProductSuggestions();
+
+}
+
+
+/* SHOW SALES */
+
+function showSales(){
+
+    let sales = getSales();
+
+    let search =
+        document.getElementById("searchBox")
+        .value
+        .trim()
+        .toLowerCase();
+
+    let sort =
+        document.getElementById("sortBox").value;
+
+
+    /* SEARCH */
+
+    let filteredSales =
+        sales.filter(function(sale){
+
+            return sale.name
+                .toLowerCase()
+                .includes(search);
+
+        });
+
+
+    /* SORT */
+
+    if(sort === "latest"){
+
+        filteredSales.reverse();
+
+    }
+
+    else if(sort === "highest"){
+
+        filteredSales.sort(function(a,b){
+
+            return Number(b.total) -
+                   Number(a.total);
+
+        });
+
+    }
+
+    else if(sort === "lowest"){
+
+        filteredSales.sort(function(a,b){
+
+            return Number(a.total) -
+                   Number(b.total);
+
+        });
+
+    }
+
+    else if(sort === "quantity"){
+
+        filteredSales.sort(function(a,b){
+
+            return Number(b.quantity) -
+                   Number(a.quantity);
+
+        });
+
+    }
+
+
+    let list =
+        document.getElementById("salesList");
+
+    list.innerHTML = "";
+
+
+    if(filteredSales.length === 0){
+
+        list.innerHTML =
+            '<div class="empty">' +
+            '📭 No sales transactions found.' +
+            '</div>';
+
+        calculateSummary();
+
+        return;
+
+    }
+
+
+    filteredSales.forEach(function(sale){
+
+        /*
+        Find original index
+        */
+
+        let originalIndex =
+            sales.indexOf(sale);
+
+
+        let dateText = "Date unavailable";
+
+        if(sale.date){
+
+            dateText =
+                new Date(sale.date)
+                .toLocaleString();
+
+        }
+
+
+        let item =
+            document.createElement("div");
+
+        item.className = "sale-item";
+
+
+        item.innerHTML = `
+
+            <div class="sale-main">
+
+                <div>
+                    <div class="sale-label">
+                        Product
+                    </div>
+
+                    <div class="sale-value">
+                        🛍️ ${escapeHTML(sale.name)}
+                    </div>
+                </div>
+
+
+                <div>
+                    <div class="sale-label">
+                        Price
+                    </div>
+
+                    <div class="sale-value">
+                        ₹${Number(sale.price).toFixed(2)}
+                    </div>
+                </div>
+
+
+                <div>
+                    <div class="sale-label">
+                        Quantity
+                    </div>
+
+                    <div class="sale-value">
+                        ${Number(sale.quantity)}
+                    </div>
+                </div>
+
+
+                <div>
+                    <div class="sale-label">
+                        Total
+                    </div>
+
+                    <div class="sale-total">
+                        ₹${Number(sale.total).toFixed(2)}
+                    </div>
+
+                    <div class="sale-label">
+                        ${dateText}
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div>
+
+                <button
+                    class="delete-button"
+                    onclick="deleteSale(${originalIndex})"
+                >
+                    🗑️ Delete
+                </button>
+
+            </div>
+
+        `;
+
+
+        list.appendChild(item);
+
+    });
+
+
+    calculateSummary();
+
+}
+
+
+/* SUMMARY */
+
+function calculateSummary(){
+
+    let sales = getSales();
+
+    let revenue = 0;
+
+    let quantity = 0;
+
+
+    sales.forEach(function(sale){
+
+        revenue += Number(sale.total);
+
+        quantity += Number(sale.quantity);
+
+    });
+
+
+    let transactionCount =
+        sales.length;
+
+
+    let average =
+        transactionCount > 0
+        ? revenue / transactionCount
+        : 0;
+
+
+    document.getElementById("totalRevenue")
+        .innerText =
+        "₹" + revenue.toFixed(2);
+
+
+    document.getElementById("totalTransactions")
+        .innerText =
+        transactionCount;
+
+
+    document.getElementById("productsSold")
+        .innerText =
+        quantity;
+
+
+    document.getElementById("averageSale")
+        .innerText =
+        "₹" + average.toFixed(2);
+
+}
+
+
+/* HTML ESCAPE */
+
+function escapeHTML(value){
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* PRODUCT NAME CHANGE */
+
+document.getElementById("productName")
+.addEventListener(
+    "input",
+    showAvailableStock
+);
+
+
+/* PRICE CHANGE */
+
+document.getElementById("price")
+.addEventListener(
+    "input",
+    calculateTotal
+);
+
+
+/* QUANTITY CHANGE */
+
+document.getElementById("quantity")
+.addEventListener(
+    "input",
+    calculateTotal
+);
+
+
+/* ENTER KEY NAVIGATION */
+
+document.getElementById("productName")
+.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Enter"){
+
+            event.preventDefault();
+
+            document.getElementById("price").focus();
+
+        }
+
+    }
+);
+
+
+document.getElementById("price")
+.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Enter"){
+
+            event.preventDefault();
+
+            document.getElementById("quantity").focus();
+
+        }
+
+    }
+);
+
+
+document.getElementById("quantity")
+.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Enter"){
+
+            event.preventDefault();
+
+            addSale();
+
+        }
+
+    }
+);
+
+
+/* INITIAL LOAD */
+
+loadProductSuggestions();
+
+showSales();
+
+</script>
+
+</body>
+</html>
